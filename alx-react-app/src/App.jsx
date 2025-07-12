@@ -12,7 +12,6 @@ function WelcomeMessage() {
           <p>I am learning about JSX!</p>
       </div>
   );
-  <WelcomeMessage /> 
 }
 
 export default WelcomeMessage;
