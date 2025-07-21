@@ -4,6 +4,9 @@ export const useRecipeStore = create((set) => ({
   recipes: [],
   filteredRecipes: [],
   searchTerm: '',
+  favorites: [],  // ✅ must be directly visible
+  recommendations: [],  // ✅ must be directly visible
+
 
   addRecipe: (newRecipe) =>
     set((state) => {
