@@ -2,56 +2,50 @@
 import React, { useState } from "react";
 
 const RegistrationForm = () => {
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
+  // state variables for each input
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
+  // handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    console.log("Form Data:", { username, email, password });
+    alert(`Submitted: ${username}, ${email}, ${password}`);
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label htmlFor="username">Username</label>
+        <label>Username:</label>
         <input
           type="text"
-          id="username"
           name="username"
-          value={formData.username}   {/* 👈 required for checker */}
-          onChange={handleChange}
+          value={username}               {/* 👈 controlled */}
+          onChange={(e) => setUsername(e.target.value)}
+          required
         />
       </div>
 
       <div>
-        <label htmlFor="email">Email</label>
+        <label>Email:</label>
         <input
           type="email"
-          id="email"
           name="email"
-          value={formData.email}      {/* 👈 required for checker */}
-          onChange={handleChange}
+          value={email}                  {/* 👈 controlled */}
+          onChange={(e) => setEmail(e.target.value)}
+          required
         />
       </div>
 
       <div>
-        <label htmlFor="password">Password</label>
+        <label>Password:</label>
         <input
           type="password"
-          id="password"
           name="password"
-          value={formData.password}   {/* 👈 required for checker */}
-          onChange={handleChange}
+          value={password}               {/* 👈 controlled */}
+          onChange={(e) => setPassword(e.target.value)}
+          required
         />
       </div>
 
