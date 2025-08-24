@@ -19,9 +19,10 @@ const PostsComponent = () => {
     refetch,
     isFetching,
   } = useQuery("posts", fetchPosts, {
-    refetchOnWindowFocus: true,   // 👈 ensures cache refresh when window is refocused
-    keepPreviousData: true,       // 👈 preserves old data while new data is being fetched
-    staleTime: 5000,              // cache data considered "fresh" for 5s
+    refetchOnWindowFocus: true,   // refresh cache when window regains focus
+    keepPreviousData: true,       // keep old data while fetching new
+    staleTime: 5000,              // data is "fresh" for 5s
+    cacheTime: 1000 * 60 * 2,     // 👈 keep unused cache for 2 minutes
   });
 
   if (isLoading) return <p>Loading posts...</p>;
@@ -29,7 +30,7 @@ const PostsComponent = () => {
 
   return (
     <div>
-      <h2>Posts</h2>
+      <h2>Posts (React Query Caching)</h2>
       <button onClick={() => refetch()} disabled={isFetching}>
         {isFetching ? "Refreshing..." : "Refetch Posts"}
       </button>
