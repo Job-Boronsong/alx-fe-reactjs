@@ -1,34 +1,33 @@
 // src/components/RegistrationForm.jsx
 import React, { useState } from "react";
-import { userSchema } from "../validationSchemas/userSchema"; // ✅ same schema
 
-function RegistrationForm() {
-  const [values, setValues] = useState({ username: "", email: "", password: "" });
-  const [errors, setErrors] = useState({});
+const RegistrationForm = () => {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({}); // 👈 store validation errors
 
-  const handleChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
-  };
-
-  const validateForm = async () => {
-    try {
-      await userSchema.validate(values, { abortEarly: false });
-      setErrors({});
-      return true;
-    } catch (err) {
-      const newErrors = {};
-      err.inner.forEach((e) => {
-        newErrors[e.path] = e.message;
-      });
-      setErrors(newErrors);
-      return false;
-    }
-  };
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (await validateForm()) {
-      alert("Plain React Form submitted:\n" + JSON.stringify(values, null, 2));
+    let newErrors = {};
+
+    // ✅ basic validation checks
+    if (!username) {
+      newErrors.username = "Username is required";
+    }
+    if (!email) {
+      newErrors.email = "Email is required";
+    }
+    if (!password) {
+      newErrors.password = "Password is required";
+    }
+
+    setErrors(newErrors);
+
+    // only submit if no errors
+    if (Object.keys(newErrors).length === 0) {
+      console.log("Form Data:", { username, email, password });
+      alert(`Submitted: ${username}, ${email}, ${password}`);
     }
   };
 
@@ -36,25 +35,40 @@ function RegistrationForm() {
     <form onSubmit={handleSubmit}>
       <div>
         <label>Username:</label>
-        <input type="text" name="username" value={values.username} onChange={handleChange} />
+        <input
+          type="text"
+          name="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
         {errors.username && <p style={{ color: "red" }}>{errors.username}</p>}
       </div>
 
       <div>
         <label>Email:</label>
-        <input type="email" name="email" value={values.email} onChange={handleChange} />
+        <input
+          type="email"
+          name="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
         {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
       </div>
 
       <div>
         <label>Password:</label>
-        <input type="password" name="password" value={values.password} onChange={handleChange} />
+        <input
+          type="password"
+          name="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
         {errors.password && <p style={{ color: "red" }}>{errors.password}</p>}
       </div>
 
-      <button type="submit">Register (Plain React)</button>
+      <button type="submit">Register</button>
     </form>
   );
-}
+};
 
 export default RegistrationForm;
