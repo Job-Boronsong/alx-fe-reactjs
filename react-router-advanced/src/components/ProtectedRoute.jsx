@@ -1,13 +1,21 @@
 // src/components/ProtectedRoute.jsx
 import { Navigate } from "react-router-dom";
 
-const isAuthenticated = false; // change to `true` to simulate logged-in user
+// Dummy useAuth hook (replace with your real auth context/hook)
+function useAuth() {
+  // For demo: change this to false to simulate not logged in
+  const user = { name: "Jane Doe" };
+  return { user };
+}
 
-const ProtectedRoute = ({ children }) => {
-  if (!isAuthenticated) {
+export default function ProtectedRoute({ children }) {
+  const { user } = useAuth();
+
+  if (!user) {
+    // If not authenticated, redirect to login
     return <Navigate to="/login" replace />;
   }
-  return children;
-};
 
-export default ProtectedRoute;
+  // If authenticated, render children
+  return children;
+}
