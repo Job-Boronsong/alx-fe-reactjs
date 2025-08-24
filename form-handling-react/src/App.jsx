@@ -1,6 +1,6 @@
 // src/App.jsx
 import React from "react";
-import FormikForm from "./components/formikForm";   // 👈 lowercase 'f' to match your filename exactly
+import FormikForm from "./components/FormikForm";   // 👈 Now matches file name
 import RegistrationForm from "./components/RegistrationForm";
 
 const App = () => {
