@@ -1,19 +1,20 @@
-// App.jsx
+// src/App.jsx
 import React from "react";
-import RegistrationForm from "./components/RegistrationForm"; 
-import FormikForm from "./components/formikForm";  // 👈 matches file casing
+import FormikForm from "./components/formikForm";   // 👈 lowercase 'f' to match your filename exactly
+import RegistrationForm from "./components/RegistrationForm";
 
-function App() {
+const App = () => {
   return (
-    <div>
-      <h1>User Registration</h1>
-      <h2>Controlled Component Form</h2>
-      <RegistrationForm />
-      
+    <div style={{ padding: "20px" }}>
+      <h1>React Forms</h1>
+
       <h2>Formik Form</h2>
       <FormikForm />
+
+      <h2>Registration Form</h2>
+      <RegistrationForm />
     </div>
   );
-}
+};
 
 export default App;
