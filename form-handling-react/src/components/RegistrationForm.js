@@ -25,14 +25,14 @@ export default function RegistrationForm() {
     setError("");
     setSuccess("");
 
-    // Basic validation
+    // ✅ Basic validation logic
     if (!formData.username || !formData.email || !formData.password) {
       setError("All fields are required.");
       return;
     }
 
     try {
-      // Simulate API call (mock endpoint)
+      // Simulate API call
       const response = await fetch("https://jsonplaceholder.typicode.com/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -42,56 +42,51 @@ export default function RegistrationForm() {
       if (!response.ok) throw new Error("Registration failed");
 
       setSuccess("User registered successfully!");
-      setFormData({ username: "", email: "", password: "" }); // Reset form
+      setFormData({ username: "", email: "", password: "" });
     } catch (err) {
       setError(err.message);
     }
   };
 
   return (
-    <div className="p-4 border rounded w-96 mx-auto mt-8">
-      <h2 className="text-xl font-bold mb-4">Register (Controlled)</h2>
+    <div>
+      <h2>Register (Controlled)</h2>
 
-      {error && <p className="text-red-500">{error}</p>}
-      {success && <p className="text-green-500">{success}</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      {success && <p style={{ color: "green" }}>{success}</p>}
 
       <form onSubmit={handleSubmit}>
-        <label className="block mb-2">
-          Username:
+        <div>
+          <label>Username:</label>
           <input
             type="text"
             name="username"
-            className="border p-2 w-full"
             value={formData.username}
             onChange={handleChange}
           />
-        </label>
+        </div>
 
-        <label className="block mb-2">
-          Email:
+        <div>
+          <label>Email:</label>
           <input
             type="email"
             name="email"
-            className="border p-2 w-full"
             value={formData.email}
             onChange={handleChange}
           />
-        </label>
+        </div>
 
-        <label className="block mb-2">
-          Password:
+        <div>
+          <label>Password:</label>
           <input
             type="password"
             name="password"
-            className="border p-2 w-full"
             value={formData.password}
             onChange={handleChange}
           />
-        </label>
+        </div>
 
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
-          Register
-        </button>
+        <button type="submit">Register</button>
       </form>
     </div>
   );

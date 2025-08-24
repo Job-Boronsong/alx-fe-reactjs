@@ -8,11 +8,13 @@ export default function FormikForm() {
     password: ""
   };
 
-  // Validation schema using Yup
+  // ✅ Yup validation schema
   const validationSchema = Yup.object({
     username: Yup.string().required("Username is required"),
     email: Yup.string().email("Invalid email format").required("Email is required"),
-    password: Yup.string().min(6, "Password must be at least 6 characters").required("Password is required")
+    password: Yup.string()
+      .min(6, "Password must be at least 6 characters")
+      .required("Password is required")
   });
 
   const handleSubmit = async (values, { setSubmitting, resetForm, setStatus }) => {
@@ -35,34 +37,34 @@ export default function FormikForm() {
   };
 
   return (
-    <div className="p-4 border rounded w-96 mx-auto mt-8">
-      <h2 className="text-xl font-bold mb-4">Register (Formik)</h2>
+    <div>
+      <h2>Register (Formik)</h2>
 
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
         {({ isSubmitting, status }) => (
           <Form>
-            {status?.error && <p className="text-red-500">{status.error}</p>}
-            {status?.success && <p className="text-green-500">{status.success}</p>}
+            {status?.error && <p style={{ color: "red" }}>{status.error}</p>}
+            {status?.success && <p style={{ color: "green" }}>{status.success}</p>}
 
-            <div className="mb-2">
-              <label className="block">Username:</label>
-              <Field type="text" name="username" className="border p-2 w-full" />
-              <ErrorMessage name="username" component="div" className="text-red-500 text-sm" />
+            <div>
+              <label>Username:</label>
+              <Field type="text" name="username" />
+              <ErrorMessage name="username" component="div" style={{ color: "red" }} />
             </div>
 
-            <div className="mb-2">
-              <label className="block">Email:</label>
-              <Field type="email" name="email" className="border p-2 w-full" />
-              <ErrorMessage name="email" component="div" className="text-red-500 text-sm" />
+            <div>
+              <label>Email:</label>
+              <Field type="email" name="email" />
+              <ErrorMessage name="email" component="div" style={{ color: "red" }} />
             </div>
 
-            <div className="mb-2">
-              <label className="block">Password:</label>
-              <Field type="password" name="password" className="border p-2 w-full" />
-              <ErrorMessage name="password" component="div" className="text-red-500 text-sm" />
+            <div>
+              <label>Password:</label>
+              <Field type="password" name="password" />
+              <ErrorMessage name="password" component="div" style={{ color: "red" }} />
             </div>
 
-            <button type="submit" disabled={isSubmitting} className="bg-green-500 text-white px-4 py-2 rounded">
+            <button type="submit" disabled={isSubmitting}>
               {isSubmitting ? "Submitting..." : "Register"}
             </button>
           </Form>
