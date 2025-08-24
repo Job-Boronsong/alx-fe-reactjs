@@ -1,6 +1,20 @@
 // src/components/formikForm.js
 import React from "react";
 import { useFormik } from "formik";
+import * as Yup from "yup";
+
+// ✅ Yup validation schema
+const validationSchema = Yup.object({
+  username: Yup.string()
+    .min(3, "Username must be at least 3 characters")
+    .required("Username is required"),
+  email: Yup.string()
+    .email("Invalid email address")
+    .required("Email is required"),
+  password: Yup.string()
+    .min(6, "Password must be at least 6 characters")
+    .required("Password is required"),
+});
 
 function FormikForm() {
   const formik = useFormik({
@@ -9,25 +23,9 @@ function FormikForm() {
       email: "",
       password: "",
     },
-    validate: (values) => {
-      const errors = {};
-      if (!values.username) {
-        errors.username = "Username is required";
-      }
-      if (!values.email) {
-        errors.email = "Email is required";
-      } else if (
-        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-      ) {
-        errors.email = "Invalid email address";
-      }
-      if (!values.password) {
-        errors.password = "Password is required";
-      }
-      return errors;
-    },
+    validationSchema, // 👈 using Yup here
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      alert("Form submitted:\n" + JSON.stringify(values, null, 2));
     },
   });
 
@@ -39,9 +37,12 @@ function FormikForm() {
           type="text"
           name="username"
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
           value={formik.values.username}
         />
-        {formik.errors.username && <p style={{ color: "red" }}>{formik.errors.username}</p>}
+        {formik.touched.username && formik.errors.username && (
+          <p style={{ color: "red" }}>{formik.errors.username}</p>
+        )}
       </div>
 
       <div>
@@ -50,9 +51,12 @@ function FormikForm() {
           type="email"
           name="email"
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
           value={formik.values.email}
         />
-        {formik.errors.email && <p style={{ color: "red" }}>{formik.errors.email}</p>}
+        {formik.touched.email && formik.errors.email && (
+          <p style={{ color: "red" }}>{formik.errors.email}</p>
+        )}
       </div>
 
       <div>
@@ -61,9 +65,12 @@ function FormikForm() {
           type="password"
           name="password"
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
           value={formik.values.password}
         />
-        {formik.errors.password && <p style={{ color: "red" }}>{formik.errors.password}</p>}
+        {formik.touched.password && formik.errors.password && (
+          <p style={{ color: "red" }}>{formik.errors.password}</p>
+        )}
       </div>
 
       <button type="submit">Register</button>
