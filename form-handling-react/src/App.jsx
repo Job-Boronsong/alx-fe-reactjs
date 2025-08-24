@@ -1,12 +1,11 @@
-import './App.css'
-import RegistrationForm from "./components/RegistrationForm";
-import formikForm from "./components/formikForm";
+import './App.css';
+import FormikForm from "./components/FormikForm";
 
 function App() {
   return (
     <div className="p-6">
-      <RegistrationForm />
-      <formikForm />
+      <h1 className="text-2xl font-bold mb-4">User Registration (Formik + Yup)</h1>
+      <FormikForm />
     </div>
   );
 }
