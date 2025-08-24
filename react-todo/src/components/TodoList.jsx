@@ -1,9 +1,10 @@
+// src/components/TodoList.jsx
 import React, { useState } from "react";
 
 export default function TodoList() {
   const [todos, setTodos] = useState([
     { id: 1, text: "Learn React", completed: false },
-    { id: 2, text: "Build Todo App", completed: true },
+    { id: 2, text: "Build a Todo App", completed: true },
   ]);
   const [newTodo, setNewTodo] = useState("");
 
@@ -32,17 +33,16 @@ export default function TodoList() {
   return (
     <div>
       <h1>Todo List</h1>
-      <form onSubmit={addTodo} data-testid="add-form">
+      <form onSubmit={addTodo}>
         <input
           type="text"
           value={newTodo}
           onChange={(e) => setNewTodo(e.target.value)}
-          placeholder="Add todo"
-          data-testid="todo-input"
+          placeholder="Add new todo"
         />
         <button type="submit">Add</button>
       </form>
-      <ul data-testid="todo-list">
+      <ul>
         {todos.map((todo) => (
           <li
             key={todo.id}
@@ -51,17 +51,10 @@ export default function TodoList() {
               textDecoration: todo.completed ? "line-through" : "none",
               cursor: "pointer",
             }}
-            data-testid={`todo-${todo.id}`}
           >
-            {todo.text}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                deleteTodo(todo.id);
-              }}
-              data-testid={`delete-${todo.id}`}
-            >
-              X
+            {todo.text}{" "}
+            <button onClick={(e) => { e.stopPropagation(); deleteTodo(todo.id); }}>
+              Delete
             </button>
           </li>
         ))}
